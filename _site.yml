@@ -1,0 +1,8 @@
+name: "ten Hove 2019"
+navbar:
+  title: "ten Hove 2019"
+  left:
+    - text: "Base"
+      href: index.html
+    - text: "Locatie"
+      href: locatie.html

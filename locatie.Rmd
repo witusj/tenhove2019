@@ -1,0 +1,37 @@
+---
+title: "Locatie"
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(gsheet)
+library(dplyr)
+library(leaflet)
+
+dataURL <- "https://docs.google.com/spreadsheets/d/1EkuUbOW6heNiER84gPoLfTdAlZ5olyZB4ngW-JxfjWU/edit?usp=sharing"
+theData <- gsheet2tbl(dataURL)
+persons <- filter(theData, Key == "Persoon")
+arrival.date <- filter(theData, Key == "Aankomst.datum")
+Longitude <- filter(theData, Key == "Longitude")[[2]] %>% as.numeric
+Latitude <- filter(theData, Key == "Latitude")[[2]] %>% as.numeric
+Plattegrond <- filter(theData, Key == "Plattegrond")[[2]]
+Adres <- filter(theData, Key == "Adres")[[2]]
+Telefoon <- filter(theData, Key == "Telefoon")[[2]]
+Mail <- filter(theData, Key == "Mail")[[2]]
+Website <- filter(theData, Key == "Url")[[2]]
+```
+
+**Adres:** `r Adres` <br>
+**Telefoon:** `r Telefoon` <br>
+**Mail:** `r Mail` <br>
+**Website:** `r Website` <br>
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=Longitude, lat=Latitude, popup=Adres)
+m  # Print the map
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE}
+knitr::include_graphics(Plattegrond)
+```
